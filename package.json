@@ -1,0 +1,63 @@
+{
+  "name": "@reboot2019-team14/dest",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ignore-path .gitignore '**/*.js'",
+    "lint:ci": "eslint --format junit --output-file ./reports/eslint/results.xml --ignore-path .gitignore '**/*.js'",
+    "test": "jest"
+  },
+  "homepage": "https://github.com/reboot2019-team14/dest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reboot2019-team14/dest.git"
+  },
+  "author": "Marco Massarotto <massa84@gmail.com>",
+  "license": "Apache-2.0",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-canonical": "^10.3.0",
+    "husky": "^1.0.0",
+    "jest": "^24.5.0",
+    "jest-junit": "^6.3.0",
+    "jest-snapshot-serializer-function-name": "^1.1.0",
+    "lint-staged": "^8.1.5"
+  },
+  "dependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-proposal-do-expressions": "^7.2.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/plugin-proposal-function-sent": "^7.2.0",
+    "@babel/plugin-proposal-json-strings": "^7.2.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.2.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.3.2",
+    "@babel/plugin-proposal-throw-expressions": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
+    "core-js": "^3.0.1",
+    "firebase-admin": "^7.3.0"
+  }
+}

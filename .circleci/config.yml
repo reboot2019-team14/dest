@@ -1,0 +1,49 @@
+version: 2.1
+jobs:
+  build:
+    environment:
+      NPM_CONFIG_PRODUCTION: "false"
+      NODE_ENV: development
+    docker:
+      - image: 'circleci/node:10'
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-npm-cache-{{ checksum "package-lock.json" }}
+            - v1-npm-cache-
+      - run:
+          name: update npm
+          command: 'sudo npm install -g npm@latest'
+      - run:
+          name: install dependencies
+          command: 'npm ci'
+          when: always
+      - save_cache:
+          key: v1-npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run: 'mkdir reports'
+      - run:
+          name: lint
+          command: "npm run lint:ci"
+          when: always
+      - run:
+          name: test
+          command: 'npm run test'
+          when: always
+      - run:
+          name: codecov upload
+          command: bash <(curl -s https://codecov.io/bash) -f ./coverage/lcov.info
+          when: always
+      - store_test_results:
+          path: ./reports
+      - store_artifacts:
+          path: ./reports/jest/results.xml
+          destination: jest
+      - store_artifacts:
+          path: ./reports/eslint/results.xml
+          destination: eslint
+      - store_artifacts:
+          path: ./coverage/lcov.info
